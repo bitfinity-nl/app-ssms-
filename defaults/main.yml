@@ -1,0 +1,38 @@
+---
+  # Title: app-mssql-2017
+  #
+  # Author: Bitfinity-NL
+  # File: defaults/main.yml
+  #
+  # Description:
+  #   Ansible role for deploying the SQL Server Management Studio (SSMS)
+  #
+  # Howto:
+  #  0. Download the files from the Microsoft site:
+  #     - https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017
+  #  1. Zip all files in 1 file.
+  #  2. Upload the file to the web/download server.
+  #  3. Edit defaults/main.yml to your needs.
+  #  4. Add the role to your playbook.
+
+
+  # -- Applications settings --
+  #
+  # Variable(s)
+  #   pkg_state        : 'present' or 'absent'                                 # Whether the application should be installed or removed (present=install, absent=removed).
+  #   pkg_name         : '7zip1805-x64'                                        # Name of the application.
+  #   pkg_arch         : '32bit' or '64bit'                                    # Whether the application is a 32bit or a 64bit application.
+  #   pkg_repo_local   : 'c:\ProgramData\ansible\cached\{{ pkg_name }}'        # Local path to package (Do not change).
+  #   pkg_repo_remote  : 'http://dl.example.com/resource/7zip/7z1805-x64.zip'  # Remote url to package (needs to be zip file).
+  #   pkg_product_id   : '{23170F69-40C1-2702-1805-000001000000}'              # Product can be found in "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" or "HKLM:\SOFTWARE\Wow6432Node\M$
+  #   pkg_installer    : '{{ pkg_repo_local }}\7z1805-x64.msi'                 # Executable for the installation.
+  #   pkg_arguments    : '/qn'                                                 # Additional Arguments for a silent installation.
+  #
+  pkg_state        : 'present'
+  pkg_name         : 'ssms2017'
+  pkg_arch         : '64bit'
+  pkg_repo_local   : 'c:\ProgramData\ansible\cached\{{ pkg_name }}'
+  pkg_repo_remote  : 'http://{{ repo_ip }}/resource/microsoft/evaluation/ssms/SSMS-Setup-ENU.zip'
+  pkg_product_id   : '{00BE2F31-85B3-414F-8BAD-01E24FB17541}'
+  pkg_installer    : '{{ pkg_repo_local }}\SSMS-Setup-ENU.exe'
+  pkg_arguments    : '/install /quiet /passive /norestart'
